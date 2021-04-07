@@ -1,5 +1,6 @@
+#[derive(Debug,Clone,Copy)]
 pub struct GameProperties {
-    pub cwidth: u32,
+    pub clen: u32,
 
     pub camount_x: u32,
     pub camount_y: u32,
@@ -11,14 +12,14 @@ pub struct GameProperties {
 }
 
 impl GameProperties {
-    pub fn new(cwidth: u32, camount_x: u32, camount_y: u32, bwidth: u32) -> GameProperties {
+    pub fn new(clen: u32, camount_x: u32, camount_y: u32, bwidth: u32) -> GameProperties {
         GameProperties {
-            cwidth,
+            clen,
             camount_x,
             camount_y,
             bwidth,
-            winwidth: ((cwidth * camount_x) + (bwidth * (camount_x - 1))),
-            winheight: ((cwidth * camount_y) + (bwidth * (camount_y - 1))),
+            winwidth: ((clen * camount_x) + (bwidth * (camount_x - 1))),
+            winheight: ((clen * camount_y) + (bwidth * (camount_y - 1))),
         }
     }
 }

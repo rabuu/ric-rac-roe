@@ -1,24 +1,23 @@
 use piston_window::types::Color;
 use piston_window::*;
 
-use crate::draw::draw_block;
+use crate::{draw::draw_rect, props::GameProperties};
 
-const RED: Color = [1.0, 0.0, 0.0, 1.0];
+
+const BORDER_COL: Color = [0.0, 0.0, 0.0, 1.0];
 
 pub struct Game {
-    width: i32,
-    height: i32,
+    props: GameProperties,
 }
 
 impl Game {
-    pub fn new(width: i32, height: i32) -> Game {
+    pub fn new(props: GameProperties) -> Game {
         Game {
-            width,
-            height,
+            props,
         }
     }
 
     pub fn draw(&self, con: &Context, g: &mut G2d) {
-        draw_block(RED, self.width / 2, self.height / 2, con, g);
+        draw_rect(BORDER_COL, 0, 0, self.props.winwidth, self.props.bwidth, con, g)
     }
 }

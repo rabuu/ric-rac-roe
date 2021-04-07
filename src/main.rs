@@ -2,28 +2,31 @@ extern crate piston_window;
 
 mod game;
 mod draw;
+mod props;
 
 use piston_window::*;
 use piston_window::types::Color;
+use props::GameProperties;
 
 use crate::game::Game;
-use crate::draw::to_coord_u32;
 
 const BG_COLOR: Color = [0.5, 0.5, 0.5, 1.0];
 
 fn main() {
-    let (width, height) = (9, 9);
+    let props: GameProperties = GameProperties::new(100, 3, 3, 10);
 
-    let mut window: PistonWindow =
-        WindowSettings::new("ric rac roe", [to_coord_u32(width), to_coord_u32(height)])
-        .exit_on_esc(true).build().unwrap();
+    let mut window: PistonWindow = WindowSettings::new("ric rac roe", (props.winwidth, props.winheight))
+        .exit_on_esc(true)
+        .resizable(false)
+        .build()
+        .unwrap_or_else(|e| { panic!("Failed to build PistonWindow: {}", e) });
 
-    let game = Game::new(width, height);
+    let game = Game::new(props);
 
-    while let Some(event) = window.next() {
-        window.draw_2d(&event, |c, g, _| {
-            clear(BG_COLOR, g);
+    while let Some(e) = window.next() {
+        window.draw_2d(&e, |c, g, _d| {
             game.draw(&c, g);
+            clear(BG_COLOR, g);
         });
     }
 }

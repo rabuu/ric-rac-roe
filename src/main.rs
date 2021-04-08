@@ -5,7 +5,6 @@ extern crate piston;
 extern crate find_folder;
 
 mod game;
-mod draw;
 mod props;
 mod cell;
 

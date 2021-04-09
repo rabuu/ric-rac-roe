@@ -1,3 +1,5 @@
+use std::fmt::Debug;
+
 use opengl_graphics::{Texture, TextureSettings};
 
 use crate::props::GameProperties;

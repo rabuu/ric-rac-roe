@@ -10,7 +10,7 @@ use crate::gui::cell::Cell;
 pub struct Game {
     props: GameProperties,
     gl: GlGraphics,
-    cells: Vec<Cell>,
+    cells: Vec<Vec<Cell>>,
 }
 
 impl Game {
@@ -21,8 +21,9 @@ impl Game {
             cells: {
                 let mut c = Vec::new();
                 for i in 0..props.camount_x {
+                    c.push(Vec::new());
                     for j in 0..props.camount_y {
-                        c.push(Cell::new(i, j, props));
+                        c[i as usize].push(Cell::new(i, j, props));
                     }
                 }
                 c
@@ -38,7 +39,7 @@ impl Game {
 
         let p = self.props;
 
-        let cell = &mut self.cells[2];
+        let cell = &mut self.cells[1][1];
         cell.set_state(CellState::Cross);
 
         let image = Image::new().rect(square(0.0, 0.0, 200.0));
@@ -56,7 +57,7 @@ impl Game {
             }
             
             // draw test cell
-            image.draw(&cell.textr, &DrawState::default(), c.transform.scale(p.clen as f64 / 200f64, p.clen as f64 / 200f64).trans(cell.coord_x, cell.coord_y), gl);
+            image.draw(&cell.textr, &DrawState::default(), c.transform.trans(cell.coord_x, cell.coord_y).scale(p.clen as f64 / 200f64, p.clen as f64 / 200f64), gl);
         });
     }
 

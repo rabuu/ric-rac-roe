@@ -3,14 +3,17 @@ use opengl_graphics::{Texture, TextureSettings};
 use crate::props::GameProperties;
 use crate::state::CellState;
 
-#[derive(Debug)]
 pub struct Cell {
     pos_x: u32,
     pos_y: u32,
 
+    pub coord_x: f64,
+    pub coord_y: f64,
+
     props: GameProperties,
 
     state: CellState,
+    pub textr: Texture,
 }
 
 impl Cell {
@@ -18,21 +21,26 @@ impl Cell {
         Cell {
             pos_x,
             pos_y,
+            coord_x: ((props.clen + props.bwidth) * pos_x) as f64,
+            coord_y: ((props.clen + props.bwidth) * pos_y) as f64,
             props,
             state: CellState::Empty,
+            textr: Texture::empty(&TextureSettings::new()).unwrap(),
         }
     }
 
-    pub fn get_coords(&self) -> (u32, u32) {
-        ((self.props.clen + self.props.bwidth) * self.pos_x,
-        (self.props.clen + self.props.bwidth) * self.pos_y)
-    }
-
-    pub fn get_texture(&self) -> Texture {
+    pub fn set_state(&mut self, state: CellState) {
         let res = find_folder::Search::ParentsThenKids(3, 3)
             .for_folder("res").unwrap_or_else(|e| { panic!("Failed finding res folder: {}", e) });
-        let img = res.join("circle.png");
-        let img = Texture::from_path(&img, &TextureSettings::new()).unwrap();
-        img
+
+        let textr: Texture;
+
+        match state {
+            CellState::Empty => textr = Texture::empty(&TextureSettings::new()).unwrap(),
+            CellState::Cross => textr = Texture::from_path(res.join("cross.png"), &TextureSettings::new()).unwrap(),
+            CellState::Circle => textr = Texture::from_path(res.join("circle.png"), &TextureSettings::new()).unwrap(),
+        } 
+        
+        self.textr = textr;
     }
 }

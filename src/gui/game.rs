@@ -1,8 +1,9 @@
-use opengl_graphics::{GlGraphics, Texture};
+use opengl_graphics::GlGraphics;
 use piston::{RenderArgs, UpdateArgs};
 use graphics::rectangle::square;
 
 use crate::props::GameProperties;
+use crate::state::CellState;
 use crate::gui::cell::Cell;
 
 
@@ -37,9 +38,8 @@ impl Game {
 
         let p = self.props;
 
-        let cell = &self.cells[2];
-        let coords = cell.get_coords();
-        let textr: Texture = cell.get_texture();
+        let cell = &mut self.cells[2];
+        cell.set_state(CellState::Cross);
 
         let image = Image::new().rect(square(0.0, 0.0, 200.0));
 
@@ -56,7 +56,7 @@ impl Game {
             }
             
             // draw test cell
-            image.draw(&textr, &DrawState::default(), c.transform.scale(p.clen as f64 / 200f64, p.clen as f64 / 200f64).trans(coords.0 as f64, coords.1 as f64), gl);
+            image.draw(&cell.textr, &DrawState::default(), c.transform.scale(p.clen as f64 / 200f64, p.clen as f64 / 200f64).trans(cell.coord_x, cell.coord_y), gl);
         });
     }
 

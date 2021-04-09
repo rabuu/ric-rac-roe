@@ -1,5 +1,6 @@
-use opengl_graphics::GlGraphics;
+use opengl_graphics::{GlGraphics, Texture};
 use piston::{RenderArgs, UpdateArgs};
+use graphics::rectangle::square;
 
 use crate::props::GameProperties;
 use crate::cell::Cell;
@@ -35,7 +36,12 @@ impl Game {
         const BORDER_COLOR: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
 
         let p = self.props;
+
         let cell = &self.cells[2];
+        let coords = cell.get_coords();
+        let textr: Texture = cell.get_texture();
+
+        let image = Image::new().rect(square(0.0, 0.0, 200.0));
 
         self.gl.draw(args.viewport(), |c, gl| {
             // Clear the screen.
@@ -49,7 +55,8 @@ impl Game {
                 rectangle(BORDER_COLOR, [0f64, (i * p.clen + (i - 1) * p.bwidth) as f64, p.winwidth as f64, p.bwidth as f64], c.transform, gl);
             }
             
-            image(&cell.get_texture(), c.transform.trans(cell.get_coords().0 as f64, cell.get_coords().1 as f64), gl);
+            // draw test cell
+            image.draw(&textr, &DrawState::default(), c.transform.scale(p.clen as f64 / 200f64, p.clen as f64 / 200f64).trans(coords.0 as f64, coords.1 as f64), gl);
         });
     }
 

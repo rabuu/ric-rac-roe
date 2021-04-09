@@ -1,4 +1,7 @@
-use opengl_graphics::{Texture, TextureSettings};
+use std::path::Path;
+
+use graphics::{Context, DrawState, Image, Transformed, rectangle::square};
+use opengl_graphics::{GlGraphics, Texture, TextureSettings};
 
 use crate::props::GameProperties;
 
@@ -29,10 +32,16 @@ impl Cell {
 
     pub fn get_texture(&self) -> Texture {
         let res = find_folder::Search::ParentsThenKids(3, 3)
-            .for_folder("res").unwrap();
-        let img = res.join("rust.png");
-        let img: Texture = Texture::from_path(&img, &TextureSettings::new()).unwrap();
+            .for_folder("res").unwrap_or_else(|e| { panic!("Failed finding res folder: {}", e) });
+        let img = res.join("circle.png");
+        let img = Texture::from_path(&img, &TextureSettings::new()).unwrap();
         img
+    }
+
+    pub fn draw(&self, c: Context, gl: &mut GlGraphics) {
+        let image = Image::new().rect(square(0.0, 0.0, 0.0));
+        let texture = Texture::from_path(Path::new("../res/cross.png"), &TextureSettings::new()).unwrap();
+        image.draw(&texture, &DrawState::default(), c.transform.scale(self.props.clen as f64 / 200f64, self.props.clen as f64 / 200f64), gl);
     }
 }
 

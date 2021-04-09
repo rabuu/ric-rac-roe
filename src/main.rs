@@ -17,11 +17,10 @@ use piston::window::WindowSettings;
 use crate::props::GameProperties;
 use crate::game::Game;
 
-// const BG_COLOR: [f32; 4] = [1f32, 1f32, 1f32, 1f32];
 
 fn main() {
     let opengl = OpenGL::V3_2;
-    let props: GameProperties = GameProperties::new(200, 3, 3, 10);
+    let props: GameProperties = GameProperties::new(100, 3, 3, 10);
 
     let mut window: Window = WindowSettings::new("ric rac roe", (props.winwidth, props.winheight))
         .exit_on_esc(true)

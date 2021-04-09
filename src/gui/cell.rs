@@ -1,6 +1,5 @@
-use std::fmt::Debug;
-
 use opengl_graphics::{Texture, TextureSettings};
+use graphics::{Image, rectangle::square};
 
 use crate::props::GameProperties;
 use crate::state::CellState;
@@ -15,6 +14,8 @@ pub struct Cell {
     props: GameProperties,
 
     state: CellState,
+
+    pub canv: Image,
     pub textr: Texture,
 }
 
@@ -27,6 +28,7 @@ impl Cell {
             coord_y: ((props.clen + props.bwidth) * pos_y) as f64,
             props,
             state: CellState::Empty,
+            canv: Image::new().rect(square(0.0, 0.0, props.clen as f64)),
             textr: Texture::empty(&TextureSettings::new()).unwrap(),
         }
     }

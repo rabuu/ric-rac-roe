@@ -1,16 +1,14 @@
 use opengl_graphics::GlGraphics;
 use piston::{RenderArgs, UpdateArgs};
-use graphics::rectangle::square;
 
 use crate::props::GameProperties;
-use crate::state::CellState;
 use crate::gui::cell::Cell;
 
 
 pub struct Game {
     props: GameProperties,
     gl: GlGraphics,
-    cells: Vec<Vec<Cell>>,
+    pub cells: Vec<Vec<Cell>>,
 }
 
 impl Game {
@@ -38,11 +36,7 @@ impl Game {
         const BORDER_COLOR: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
 
         let p = self.props;
-
-        let cell = &mut self.cells[1][1];
-        cell.set_state(CellState::Cross);
-
-        let image = Image::new().rect(square(0.0, 0.0, 200.0));
+        let cells = &mut self.cells;
 
         self.gl.draw(args.viewport(), |c, gl| {
             // Clear the screen.
@@ -56,12 +50,16 @@ impl Game {
                 rectangle(BORDER_COLOR, [0f64, (i * p.clen + (i - 1) * p.bwidth) as f64, p.winwidth as f64, p.bwidth as f64], c.transform, gl);
             }
             
-            // draw test cell
-            image.draw(&cell.textr, &DrawState::default(), c.transform.trans(cell.coord_x, cell.coord_y).scale(p.clen as f64 / 200f64, p.clen as f64 / 200f64), gl);
+            // draw cells
+            for i in 0..cells.len() {
+                for cell in &cells[i] {
+                    cell.canv.draw(&cell.textr, &DrawState::default(), c.transform.trans(cell.coord_x, cell.coord_y), gl);
+                }
+            }
         });
     }
 
-    pub fn update(&mut self, _args: &UpdateArgs) {
-
+    pub fn update(&mut self) {
+        self.cells[2][1].set_state(crate::state::CellState::Circle);
     }
 }

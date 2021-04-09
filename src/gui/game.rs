@@ -3,7 +3,7 @@ use piston::{RenderArgs, UpdateArgs};
 use graphics::rectangle::square;
 
 use crate::props::GameProperties;
-use crate::cell::Cell;
+use crate::gui::cell::Cell;
 
 
 pub struct Game {

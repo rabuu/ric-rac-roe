@@ -1,9 +1,7 @@
-use std::path::Path;
-
-use graphics::{Context, DrawState, Image, Transformed, rectangle::square};
-use opengl_graphics::{GlGraphics, Texture, TextureSettings};
+use opengl_graphics::{Texture, TextureSettings};
 
 use crate::props::GameProperties;
+use crate::state::CellState;
 
 #[derive(Debug)]
 pub struct Cell {
@@ -12,7 +10,7 @@ pub struct Cell {
 
     props: GameProperties,
 
-    state: State,
+    state: CellState,
 }
 
 impl Cell {
@@ -21,7 +19,7 @@ impl Cell {
             pos_x,
             pos_y,
             props,
-            state: State::Empty,
+            state: CellState::Empty,
         }
     }
 
@@ -37,17 +35,4 @@ impl Cell {
         let img = Texture::from_path(&img, &TextureSettings::new()).unwrap();
         img
     }
-
-    pub fn draw(&self, c: Context, gl: &mut GlGraphics) {
-        let image = Image::new().rect(square(0.0, 0.0, 0.0));
-        let texture = Texture::from_path(Path::new("../res/cross.png"), &TextureSettings::new()).unwrap();
-        image.draw(&texture, &DrawState::default(), c.transform.scale(self.props.clen as f64 / 200f64, self.props.clen as f64 / 200f64), gl);
-    }
-}
-
-#[derive(Debug)]
-pub enum State {
-    Cross,
-    Circle,
-    Empty,
 }

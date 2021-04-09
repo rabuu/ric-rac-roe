@@ -1,15 +1,12 @@
 use opengl_graphics::{Texture, TextureSettings};
 use graphics::{Image, rectangle::square};
 
-use crate::props::GameProperties;
-use crate::state::CellState;
+use crate::utils::{CellPos, CellState, Coords, GameProperties};
 
 pub struct Cell {
-    pos_x: u32,
-    pos_y: u32,
+    pos: CellPos,
 
-    pub coord_x: f64,
-    pub coord_y: f64,
+    pub coords: Coords,
 
     props: GameProperties,
 
@@ -20,12 +17,11 @@ pub struct Cell {
 }
 
 impl Cell {
-    pub fn new(pos_x: u32, pos_y: u32, props: GameProperties) -> Cell {
+    pub fn new(pos: CellPos, props: GameProperties) -> Cell {
         Cell {
-            pos_x,
-            pos_y,
-            coord_x: ((props.clen + props.bwidth) * pos_x) as f64,
-            coord_y: ((props.clen + props.bwidth) * pos_y) as f64,
+            pos,
+            coords: Coords {x: ((props.clen + props.bwidth) * pos.x) as f64,
+                            y: ((props.clen + props.bwidth) * pos.y) as f64},
             props,
             state: CellState::Empty,
             canv: Image::new().rect(square(0.0, 0.0, props.clen as f64)),
@@ -37,14 +33,10 @@ impl Cell {
         let res = find_folder::Search::ParentsThenKids(3, 3)
             .for_folder("res").unwrap_or_else(|e| { panic!("Failed finding res folder: {}", e) });
 
-        let textr: Texture;
-
-        match state {
-            CellState::Empty => textr = Texture::empty(&TextureSettings::new()).unwrap(),
-            CellState::Cross => textr = Texture::from_path(res.join("cross.png"), &TextureSettings::new()).unwrap(),
-            CellState::Circle => textr = Texture::from_path(res.join("circle.png"), &TextureSettings::new()).unwrap(),
-        } 
-        
-        self.textr = textr;
+        self.textr = match state {
+            CellState::Empty => Texture::empty(&TextureSettings::new()).unwrap(),
+            CellState::Cross => Texture::from_path(res.join("cross.png"), &TextureSettings::new()).unwrap(),
+            CellState::Circle => Texture::from_path(res.join("circle.png"), &TextureSettings::new()).unwrap(),
+        };
     }
 }

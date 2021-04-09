@@ -1,16 +1,16 @@
 use gui::Gui;
 use input_handling::mouse_clicked;
-use piston::{Button, EventLoop, EventSettings, Events, PressEvent, RenderEvent};
-use props::GameProperties;
+use piston::{Button, EventLoop, EventSettings, Events, MouseCursorEvent, PressEvent, RenderEvent};
+use utils::{Coords, GameProperties};
 
 mod gui;
-mod props;
-mod state;
 mod input_handling;
+mod utils;
 
 fn main() {
 
     let props: GameProperties = GameProperties::new(100, 3, 3, 10);
+    let mut cursor = Coords {x: -1.0, y: -1.0};
 
     let mut gui: Gui = Gui::new(props);
 
@@ -21,8 +21,13 @@ fn main() {
             gui.game.render(&args);
         }
 
+        e.mouse_cursor(|pos| {
+            cursor = Coords { x: pos[0], y: pos[1] };
+        });
+
         if let Some(Button::Mouse(button)) = e.press_args() {
-            mouse_clicked(button, &mut gui.game);
+            mouse_clicked(button, cursor, &mut gui.game, props);
         }
+
     }
 }

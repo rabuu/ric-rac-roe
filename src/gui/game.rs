@@ -1,9 +1,8 @@
 use opengl_graphics::GlGraphics;
 use piston::RenderArgs;
 
-use crate::props::GameProperties;
-use crate::gui::cell::Cell;
-
+use crate::{gui::cell::Cell, utils::CellPos};
+use crate::utils::{GameProperties, CellState};
 
 pub struct Game {
     props: GameProperties,
@@ -21,7 +20,7 @@ impl Game {
                 for i in 0..props.camount_x {
                     c.push(Vec::new());
                     for j in 0..props.camount_y {
-                        c[i as usize].push(Cell::new(i, j, props));
+                        c[i as usize].push(Cell::new(CellPos {x: i, y: j}, props));
                     }
                 }
                 c
@@ -53,13 +52,13 @@ impl Game {
             // draw cells
             for i in 0..cells.len() {
                 for cell in &cells[i] {
-                    cell.canv.draw(&cell.textr, &DrawState::default(), c.transform.trans(cell.coord_x, cell.coord_y), gl);
+                    cell.canv.draw(&cell.textr, &DrawState::default(), c.transform.trans(cell.coords.x, cell.coords.y), gl);
                 }
             }
         });
     }
 
-    pub fn update(&mut self) {
-        self.cells[2][1].set_state(crate::state::CellState::Circle);
+    pub fn update_cell(&mut self, pos: CellPos, state: CellState) {
+        self.cells[pos.x as usize][pos.y as usize].set_state(state);
     }
 }

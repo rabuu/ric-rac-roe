@@ -11,8 +11,8 @@ use glutin_window::GlutinWindow as Window;
 use opengl_graphics::{GlGraphics, OpenGL};
 use piston::window::WindowSettings;
 
-use crate::props::GameProperties;
 use crate::gui::game::Game;
+use crate::utils::GameProperties;
 
 pub struct Gui {
     pub game: Game,

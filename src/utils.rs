@@ -23,3 +23,22 @@ impl GameProperties {
         }
     }
 }
+
+#[derive(Debug,Clone,Copy)]
+pub struct CellPos {
+    pub x: u32,
+    pub y: u32,
+}
+
+#[derive(Debug,Clone,Copy)]
+pub struct Coords {
+    pub x: f64,
+    pub y: f64,
+}
+
+#[derive(Debug)]
+pub enum CellState {
+    Cross,
+    Circle,
+    Empty,
+}

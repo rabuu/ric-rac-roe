@@ -1,18 +1,18 @@
 use opengl_graphics::GlGraphics;
 use piston::RenderArgs;
 
-use crate::{gui::cell::Cell, utils::CellPos};
-use crate::utils::{GameProperties, CellState};
+use crate::gui::cell::Cell;
+use crate::utils::{GameProperties, CellState, CellPos};
 
-pub struct Game {
+pub struct Front {
     props: GameProperties,
     gl: GlGraphics,
     pub cells: Vec<Vec<Cell>>,
 }
 
-impl Game {
-    pub fn new(props: GameProperties, gl: GlGraphics) -> Game {
-        Game {
+impl Front {
+    pub fn new(props: GameProperties, gl: GlGraphics) -> Front {
+        Front {
             props,
             gl,
             cells: {

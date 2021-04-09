@@ -4,18 +4,18 @@ extern crate opengl_graphics;
 extern crate piston;
 extern crate find_folder;
 
-pub mod game;
+pub mod front;
 mod cell;
 
 use glutin_window::GlutinWindow as Window;
 use opengl_graphics::{GlGraphics, OpenGL};
 use piston::window::WindowSettings;
 
-use crate::gui::game::Game;
+use crate::gui::front::Front;
 use crate::utils::GameProperties;
 
 pub struct Gui {
-    pub game: Game,
+    pub game: Front,
     pub window: Window,
 }
 
@@ -29,7 +29,7 @@ impl Gui {
             .build()
             .unwrap_or_else(|e| { panic!("Failed to build window: {}", e) });
 
-        let game: Game = Game::new(props, GlGraphics::new(opengl));
+        let game: Front = Front::new(props, GlGraphics::new(opengl));
         
         Gui {
             game,

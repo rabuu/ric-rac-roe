@@ -1,9 +1,9 @@
 use piston::MouseButton;
 
-use crate::{gui::game::Game, utils::{CellPos, Coords}};
-use crate::utils::{GameProperties, CellState};
+use crate::gui::front::Front;
+use crate::utils::{GameProperties, CellState, CellPos, Coords};
 
-pub fn mouse_clicked(btn: MouseButton, cursor: Coords, game: &mut Game, props: GameProperties) {
+pub fn mouse_clicked(btn: MouseButton, cursor: Coords, game: &mut Front, props: GameProperties) {
     println!("{:?}", btn );
     game.update_cell(get_cellpos_from_coords(cursor, props), CellState::Circle);
 }

@@ -4,7 +4,7 @@ extern crate opengl_graphics;
 extern crate piston;
 extern crate find_folder;
 
-mod game;
+pub mod game;
 mod cell;
 
 use glutin_window::GlutinWindow as Window;

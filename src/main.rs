@@ -1,10 +1,12 @@
 use gui::Gui;
-use piston::{Button, EventLoop, EventSettings, Events, MouseCursorEvent, PressEvent, RenderEvent, UpdateEvent};
+use input_handling::mouse_clicked;
+use piston::{Button, EventLoop, EventSettings, Events, PressEvent, RenderEvent};
 use props::GameProperties;
 
 mod gui;
 mod props;
 mod state;
+mod input_handling;
 
 fn main() {
 
@@ -13,16 +15,14 @@ fn main() {
     let mut gui: Gui = Gui::new(props);
 
     let mut events = Events::new(EventSettings::new()).lazy(true);
+
     while let Some(e) = events.next(&mut gui.window) {
         if let Some(args) = e.render_args() {
             gui.game.render(&args);
         }
 
         if let Some(Button::Mouse(button)) = e.press_args() {
-            println!("Pressed mouse button '{:?}'", button);
-            gui.game.update();
+            mouse_clicked(button, &mut gui.game);
         }
     }
-
-
 }

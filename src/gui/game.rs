@@ -1,5 +1,5 @@
 use opengl_graphics::GlGraphics;
-use piston::{RenderArgs, UpdateArgs};
+use piston::RenderArgs;
 
 use crate::props::GameProperties;
 use crate::gui::cell::Cell;

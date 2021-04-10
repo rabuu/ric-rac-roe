@@ -1,10 +1,10 @@
 use gui::Gui;
-use input_handling::mouse_clicked;
+use bridge::mouse_clicked;
 use piston::{Button, EventLoop, EventSettings, Events, MouseCursorEvent, PressEvent, RenderEvent};
 use utils::{Coords, GameProperties};
 
 mod gui;
-mod input_handling;
+mod bridge;
 mod utils;
 
 fn main() {

@@ -28,7 +28,7 @@ impl GameProperties {
 }
 
 // struct for cell position
-#[derive(Debug,Clone,Copy)]
+#[derive(Debug,Clone,Copy,PartialEq)]
 pub struct CellPos(pub u32, pub u32);
 
 // struct for absolute coordinates on window

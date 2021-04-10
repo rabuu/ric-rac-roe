@@ -1,23 +1,37 @@
+mod player;
+
 use crate::gui::front::Front;
 use crate::utils::{CellPos, CellState, GameProperties};
-use crate::bridge::update_front;
+use crate::game::player::{human::Human, ai::AI};
 
 pub struct Game {
-    props: GameProperties,
-
     field: Vec<Vec<CellState>>,
+    human: Human,
+    ai: AI,
 }
 
 impl Game {
     pub fn new(props: GameProperties) -> Game {
         Game {
-            props,
             field: vec![vec![CellState::Empty; props.camount_x as usize]; props.camount_y as usize],
+            human: Human::new(),
+            ai: AI::new(),
         }
     }
 
     pub fn cell_pressed(&mut self, pos: CellPos, front: &mut Front) {
-        self.field[pos.0 as usize][pos.1 as usize] = CellState::Cross;
-        update_front(&self.field, front);
+        if self.empty_cells().iter().any(|&cell| cell == pos) {
+            human.make_move(pos);
+        }
+    }
+
+    fn empty_cells(&self) -> Vec<CellPos> {
+        let mut cells: Vec<CellPos> = Vec::new();
+        for i in 0..self.field.len() {
+            for j in 0..self.field[i].len() {
+                cells.push(CellPos(i as u32, j as u32));
+            }
+        }
+        cells
     }
 }

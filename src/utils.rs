@@ -36,7 +36,7 @@ pub struct Coords {
     pub y: f64,
 }
 
-#[derive(Debug)]
+#[derive(Debug,Clone,Copy)]
 pub enum CellState {
     Cross,
     Circle,

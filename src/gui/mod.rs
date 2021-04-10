@@ -15,7 +15,7 @@ use crate::gui::front::Front;
 use crate::utils::GameProperties;
 
 pub struct Gui {
-    pub game: Front,
+    pub front: Front,
     pub window: Window,
 }
 
@@ -29,10 +29,10 @@ impl Gui {
             .build()
             .unwrap_or_else(|e| { panic!("Failed to build window: {}", e) });
 
-        let game: Front = Front::new(props, GlGraphics::new(opengl));
+        let front: Front = Front::new(props, GlGraphics::new(opengl));
         
         Gui {
-            game,
+            front,
             window,
         }
     }

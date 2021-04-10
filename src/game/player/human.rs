@@ -16,6 +16,6 @@ impl Human {
 
 impl Player for Human {
     fn make_move(&mut self, pos: CellPos, field: &mut Vec<Vec<CellState>>) {
-        
+        field[pos.0 as usize][pos.1 as usize] = self.symbol;
     }
 }

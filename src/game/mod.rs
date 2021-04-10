@@ -1,8 +1,8 @@
 mod player;
 
-use crate::gui::front::Front;
+use crate::{bridge, gui::front::Front};
 use crate::utils::{CellPos, CellState, GameProperties};
-use crate::game::player::{human::Human, ai::AI};
+use crate::game::player::{Player, human::Human, ai::AI};
 
 pub struct Game {
     field: Vec<Vec<CellState>>,
@@ -21,7 +21,8 @@ impl Game {
 
     pub fn cell_pressed(&mut self, pos: CellPos, front: &mut Front) {
         if self.empty_cells().iter().any(|&cell| cell == pos) {
-            human.make_move(pos);
+            self.human.make_move(pos, &mut self.field);
+            bridge::update_front(&self.field, front);
         }
     }
 

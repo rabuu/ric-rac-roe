@@ -14,6 +14,8 @@ use piston::window::WindowSettings;
 use crate::gui::front::Front;
 use crate::utils::GameProperties;
 
+/* GUI */
+
 pub struct Gui {
     pub front: Front,
     pub window: Window,
@@ -22,6 +24,8 @@ pub struct Gui {
 impl Gui {
     pub fn new(props: GameProperties) -> Gui {
         let opengl = OpenGL::V3_2;
+
+        // create window and set settings
         let window: Window = WindowSettings::new("ric rac roe", (props.winwidth, props.winheight))
             .exit_on_esc(true)
             .resizable(false)

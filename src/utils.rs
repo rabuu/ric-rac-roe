@@ -42,3 +42,10 @@ pub enum CellState {
     Circle,
     Empty,
 }
+
+// the two types of players
+#[derive(Clone,Copy,PartialEq)]
+pub enum PlayerType {
+    Human,
+    AI,
+}

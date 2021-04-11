@@ -1,13 +1,21 @@
-use crate::utils::{CellPos, CellState};
+use crate::utils::{CellPos, CellState, PlayerType};
 
 pub struct Player {
-    symbol: CellState,
+    pub ptype: PlayerType,
+    pub symbol: CellState,
 }
 
 impl Player {
-    pub fn new(symbol: CellState) -> Player {
+    pub fn new(ptype: PlayerType) -> Player {
         Player {
-            symbol,
+            ptype,
+            symbol: if ptype == PlayerType::Human {
+                CellState::Circle
+            } else if ptype == PlayerType::AI {
+                CellState::Cross
+            } else {
+                panic!("Must be human or AI");
+            },
         }
     }
 

@@ -8,8 +8,9 @@ use crate::utils::{GameProperties, CellPos, CellState, Coords};
 
 // send mouse clicks from main to backend
 pub fn mouse_clicked(btn: MouseButton, cursor: Coords, game: &mut Game, front: &mut Front, props: GameProperties) {
-    println!("{:?}", btn );
-    game.cell_pressed(get_cellpos_from_coords(cursor, props), front);
+    if btn == MouseButton::Left {
+        game.cell_pressed(get_cellpos_from_coords(cursor, props), front);
+    }
 }
 
 // update front/redraw all cells according to a field

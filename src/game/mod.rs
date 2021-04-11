@@ -35,4 +35,28 @@ impl Game {
         }
         cells
     }
+
+    fn winner(&self) -> Option<CellState> {
+        let win_state: Vec<Vec<CellState>> = vec![
+            vec![self.field[0][0], self.field[0][1], self.field[0][2]]
+        ];
+        for i in 0..win_state.len() {
+            let line = &win_state[i];
+            let (mut cr, mut ci) = (0, 0);
+            for j in 0..2 {
+                if line[j] == CellState::Cross {
+                    cr += 1;
+                } else if line[j] == CellState::Circle {
+                    ci += 1;
+                }
+                if cr == 3 {
+                    return Some(CellState::Cross);
+                }
+                if ci == 3 {
+                    return Some(CellState::Circle);
+                }
+            }
+        }
+        return None;
+    }
 }

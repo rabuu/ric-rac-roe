@@ -36,7 +36,7 @@ pub struct CellPos(pub u32, pub u32);
 pub struct Coords(pub f64, pub f64);
 
 // the three states a cell can have
-#[derive(Debug,Clone,Copy)]
+#[derive(Debug,Clone,Copy,PartialEq)]
 pub enum CellState {
     Cross,
     Circle,

@@ -32,26 +32,34 @@ impl Game {
     
     // the actual game flow triggered by a cell press
     pub fn cell_pressed(&mut self, pos: CellPos, front: &mut Front) {
+        
         // filter only 3x3 games
         if self.field.len() != 3 || self.field.iter().any(|row| row.len() != 3) {
             panic!("3x3 only.")
         }
 
         if empty_cells(&self.field).iter().any(|&cell| cell == pos) && winner(&self.field) == None {
+
+            // human turn
             self.human.make_move(pos, &mut self.field);
-            update_front(&self.field, front);
+            front.update_cell(pos, self.human.symbol);
+
             if empty_cells(&self.field).len() > 0 && winner(&self.field) == None {
-                    self.ai.make_move(call_minimax(&self.field, self.ai.ptype), &mut self.field);
-                    update_front(&self.field, front);
-                    if winner(&self.field) != None {
-                        announce_winner(&self.field);
-                    }
+                    
+                // ai turn
+                self.ai.make_move(call_minimax(&self.field, self.ai.ptype), &mut self.field);
+                update_front(&self.field, front);
+
+                if winner(&self.field) != None {
+                    announce_winner(&self.field);
+                }
             } else {
                 announce_winner(&self.field);
             }
         } 
     }
 
+    // restart whole game
     pub fn restart(&mut self, front: &mut Front) {
         self.field = vec![vec![CellState::Empty; self.props.camount_x as usize]; self.props.camount_y as usize];
         update_front(&self.field, front);

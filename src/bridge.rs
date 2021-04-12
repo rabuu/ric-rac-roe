@@ -1,6 +1,8 @@
-use piston::MouseButton;
+use std::process::exit;
 
-use crate::gui::front::Front;
+use piston::{Key, MouseButton};
+
+use crate::gui::{Gui, front::Front};
 use crate::game::Game;
 use crate::utils::{GameProperties, CellPos, CellState, Coords};
 
@@ -10,6 +12,17 @@ use crate::utils::{GameProperties, CellPos, CellState, Coords};
 pub fn mouse_clicked(btn: MouseButton, cursor: Coords, game: &mut Game, front: &mut Front, props: GameProperties) {
     if btn == MouseButton::Left {
         game.cell_pressed(get_cellpos_from_coords(cursor, props), front);
+    }
+}
+
+// tranfer key presses
+pub fn key_pressed(key: Key, game: &mut Game, gui: &mut Gui) {
+    if key == Key::Q {
+        exit(0);
+    }
+
+    if key == Key::R {
+        game.restart(&mut gui.front);
     }
 }
 

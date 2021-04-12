@@ -5,6 +5,7 @@ mod game;
 mod bridge;
 mod utils;
 
+use bridge::key_pressed;
 use piston::{Button, EventLoop, EventSettings, Events, MouseCursorEvent, PressEvent, RenderEvent};
 
 use crate::gui::Gui;
@@ -47,6 +48,11 @@ fn main() {
         // pass mouse clicks to bridge::mouse_clicked()
         if let Some(Button::Mouse(button)) = e.press_args() {
             mouse_clicked(button, cursor, &mut game, &mut gui.front, props);
+        }
+
+        // key presses
+        if let Some(Button::Keyboard(key)) = e.press_args() {
+            key_pressed(key, &mut game, &mut gui);
         }
 
     }

@@ -15,6 +15,7 @@ use crate::game::player::Player;
 
 pub struct Game {
     field: Vec<Vec<CellState>>,
+    props: GameProperties,
     human: Player,
     ai: Player,
 }
@@ -23,6 +24,7 @@ impl Game {
     pub fn new(props: GameProperties) -> Game {
         Game {
             field: vec![vec![CellState::Empty; props.camount_x as usize]; props.camount_y as usize],
+            props,
             human: Player::new(PlayerType::Human),
             ai: Player::new(PlayerType::AI),
         }
@@ -48,5 +50,10 @@ impl Game {
                 announce_winner(&self.field);
             }
         } 
+    }
+
+    pub fn restart(&mut self, front: &mut Front) {
+        self.field = vec![vec![CellState::Empty; self.props.camount_x as usize]; self.props.camount_y as usize];
+        update_front(&self.field, front);
     }
 }

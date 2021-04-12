@@ -29,7 +29,6 @@ pub fn call_minimax(field: &Vec<Vec<CellState>>, player: PlayerType) -> CellPos 
 }
 
 fn minimax(field: &mut Vec<Vec<i32>>, depth: usize, pval: &mut i32) -> [f32; 3] {
-    println!("{:?}", depth);
     let mut best: [f32; 3];
 
     if *pval == 1 {
@@ -43,13 +42,11 @@ fn minimax(field: &mut Vec<Vec<i32>>, depth: usize, pval: &mut i32) -> [f32; 3] 
         return [-1_f32, -1_f32, score];
     }
 
-    if empty_cells_mm(field).len() > 1 {
     for cell in empty_cells_mm(field) {
         let x = cell.0;
         let y = cell.1;
         field[x as usize][y as usize] = *pval;
-        *pval -= 1;
-        let mut score = minimax(field, depth - 1, pval);
+        let mut score = minimax(field, depth - 1, &mut -*pval);
         field[x as usize][y as usize] = 0;
         score[0] = x as f32;
         score[1] = y as f32;
@@ -64,7 +61,7 @@ fn minimax(field: &mut Vec<Vec<i32>>, depth: usize, pval: &mut i32) -> [f32; 3] 
                 best = score;
             }
         }
-    }}
+    }
 
     best
     

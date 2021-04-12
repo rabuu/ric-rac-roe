@@ -1,5 +1,3 @@
-use std::f32::{INFINITY, NEG_INFINITY};
-
 use crate::utils::{CellPos, CellState, PlayerType};
 
 use super::helpers::{empty_cells, empty_cells_mm, mm_field_to_field, winner};
@@ -35,9 +33,9 @@ fn minimax(field: &mut Vec<Vec<i32>>, depth: usize, pval: &mut i32) -> [f32; 3] 
     let mut best: [f32; 3];
 
     if *pval == 1 {
-        best = [-1_f32, -1_f32, NEG_INFINITY];
+        best = [-1_f32, -1_f32, -1000_f32];
     } else {
-        best = [-1_f32, -1_f32, INFINITY];
+        best = [-1_f32, -1_f32, 1000_f32];
     }
 
     if depth == 0 {
@@ -72,10 +70,10 @@ fn minimax(field: &mut Vec<Vec<i32>>, depth: usize, pval: &mut i32) -> [f32; 3] 
 
 // helper function to evaluate scores
 fn evaluate(field: &Vec<Vec<i32>>) -> f32 {
-    let mut score = 0;
+    let score;
     match winner(&mm_field_to_field(field)) {
-        Some(CellState::Cross) => score += 1,
-        Some(CellState::Circle) => score -= 1,
+        Some(CellState::Cross) => score = 1,
+        Some(CellState::Circle) => score = -1,
         None => score = 0,
         _ => panic!(),
     }

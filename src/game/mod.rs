@@ -39,14 +39,14 @@ impl Game {
             self.human.make_move(pos, &mut self.field);
             update_front(&self.field, front);
             if empty_cells(&self.field).len() > 0 && winner(&self.field) == None {
-                self.ai.make_move(call_minimax(&self.field, self.ai.ptype), &mut self.field);
-                update_front(&self.field, front);
-                if winner(&self.field) != None {
-                    announce_winner(&self.field);
-                }
+                    self.ai.make_move(call_minimax(&self.field, self.ai.ptype), &mut self.field);
+                    update_front(&self.field, front);
+                    if winner(&self.field) != None {
+                        announce_winner(&self.field);
+                    }
             } else {
                 announce_winner(&self.field);
-            } 
+            }
         } 
     }
 }

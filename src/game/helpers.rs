@@ -79,10 +79,11 @@ pub fn winner(field: &Vec<Vec<CellState>>) -> Option<CellState> {
 }
 
 pub fn announce_winner(field: &Vec<Vec<CellState>>) {
-    let winner = winner(field).expect("Uhoh, no winner but there should :(");
+    let winner = winner(field);
     match winner {
-        CellState::Cross => println!("The AI (X) won!"),
-        CellState::Circle => println!("You (O) won!"),
-        _ => {},
+        Some(CellState::Cross) => println!("The AI (X) won!"),
+        Some(CellState::Circle) => println!("You (O) won!"),
+        None => println!("Draw!"),
+        _ => panic!()
     }
 }

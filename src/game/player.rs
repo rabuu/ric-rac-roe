@@ -1,5 +1,7 @@
 use crate::utils::{CellPos, CellState, PlayerType};
 
+/* THE PLAYER */
+
 pub struct Player {
     pub ptype: PlayerType,
     pub symbol: CellState,

@@ -1,5 +1,8 @@
 use crate::utils::{CellState, CellPos};
 
+/* HELPER FUNCTIONS FOR GAME BACKEND */
+
+// get a vec of cell positions with empty cells out of a fied
 pub fn empty_cells(field: &Vec<Vec<CellState>>) -> Vec<CellPos> {
     let mut cells: Vec<CellPos> = Vec::new();
     for i in 0..field.len() {
@@ -12,6 +15,7 @@ pub fn empty_cells(field: &Vec<Vec<CellState>>) -> Vec<CellPos> {
     cells
 }
 
+// same as above but for a minimax field that contains i32's
 pub fn empty_cells_mm(field: &Vec<Vec<i32>>) -> Vec<CellPos> {
     let mut cells: Vec<CellPos> = Vec::new();
     for i in 0..field.len() {
@@ -24,6 +28,7 @@ pub fn empty_cells_mm(field: &Vec<Vec<i32>>) -> Vec<CellPos> {
     cells
 }
 
+// translate minimax field to normal field
 pub fn mm_field_to_field(field: &Vec<Vec<i32>>) -> Vec<Vec<CellState>> {
     let mut cells: Vec<Vec<CellState>> = Vec::new();
     for i in 0..field.len() {
@@ -41,6 +46,7 @@ pub fn mm_field_to_field(field: &Vec<Vec<i32>>) -> Vec<Vec<CellState>> {
     cells
 }
 
+// calculate whether there is a winner and who
 pub fn winner(field: &Vec<Vec<CellState>>) -> Option<CellState> {
     let win_state: Vec<Vec<CellState>> = vec![
         vec![field[0][0], field[0][1], field[0][2]],
@@ -70,4 +76,13 @@ pub fn winner(field: &Vec<Vec<CellState>>) -> Option<CellState> {
         }
     }
     return None;
+}
+
+pub fn announce_winner(field: &Vec<Vec<CellState>>) {
+    let winner = winner(field).expect("Uhoh, no winner but there should :(");
+    match winner {
+        CellState::Cross => println!("The AI (X) won!"),
+        CellState::Circle => println!("You (O) won!"),
+        _ => {},
+    }
 }

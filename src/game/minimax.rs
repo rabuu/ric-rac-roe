@@ -4,6 +4,9 @@ use crate::utils::{CellPos, CellState, PlayerType};
 
 use super::helpers::{empty_cells, empty_cells_mm, mm_field_to_field, winner};
 
+/* IMPLEMENTATION OF THE MINIMAX ALGORITHM */
+
+// public function that triggers the minimax algorithm 
 pub fn call_minimax(field: &Vec<Vec<CellState>>, player: PlayerType) -> CellPos {
     let mut mm_field: Vec<Vec<i32>> = Vec::new();
     for i in 0..field.len() {
@@ -24,10 +27,10 @@ pub fn call_minimax(field: &Vec<Vec<CellState>>, player: PlayerType) -> CellPos 
     let mut pval = if player == PlayerType::AI {1} else if player == PlayerType::Human {-1} else { panic!(); };
     let depth: usize = empty_cells(field).len();
     let mm = minimax(&mut mm_field, depth, &mut pval);
-    println!("{:?}", mm);
     CellPos(mm[0] as u32, mm[1] as u32)
 }
 
+// actual minimax algorithm
 fn minimax(field: &mut Vec<Vec<i32>>, depth: usize, pval: &mut i32) -> [f32; 3] {
     let mut best: [f32; 3];
 
@@ -67,6 +70,7 @@ fn minimax(field: &mut Vec<Vec<i32>>, depth: usize, pval: &mut i32) -> [f32; 3] 
     
 }
 
+// helper function to evaluate scores
 fn evaluate(field: &Vec<Vec<i32>>) -> f32 {
     let mut score = 0;
     match winner(&mm_field_to_field(field)) {

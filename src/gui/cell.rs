@@ -1,5 +1,6 @@
 use opengl_graphics::{Texture, TextureSettings};
-use graphics::{Image, rectangle::square};
+use graphics::Image;
+use graphics::rectangle::square;
 
 use crate::utils::{CellPos, CellState, Coords, GameProperties};
 

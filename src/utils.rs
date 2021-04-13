@@ -1,8 +1,19 @@
+use structopt::StructOpt;
+
 /* UTILS */
+
+// an arguments struct
+#[derive(Debug,Clone,Copy,StructOpt)]
+pub struct Arguments {
+    #[structopt(parse(try_from_str))]
+    pub starter: bool,
+}
 
 // struct for game properties
 #[derive(Debug,Clone,Copy)]
 pub struct GameProperties {
+    pub args: Arguments,
+
     pub clen: u32,
 
     pub bwidth: u32,
@@ -15,8 +26,9 @@ pub struct GameProperties {
 }
 
 impl GameProperties {
-    pub fn new(clen: u32, bwidth: u32, camount_x: u32, camount_y: u32) -> GameProperties {
+    pub fn new(args: Arguments, clen: u32, bwidth: u32, camount_x: u32, camount_y: u32) -> GameProperties {
         GameProperties {
+            args,
             clen,
             bwidth,
             camount_x,

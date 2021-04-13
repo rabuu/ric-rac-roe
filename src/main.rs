@@ -5,13 +5,13 @@ mod game;
 mod bridge;
 mod utils;
 
-use bridge::key_pressed;
 use piston::{Button, EventLoop, EventSettings, Events, MouseCursorEvent, PressEvent, RenderEvent};
+use structopt::StructOpt;
 
 use crate::gui::Gui;
 use crate::game::Game;
-use crate::bridge::mouse_clicked;
-use crate::utils::{Coords, GameProperties};
+use crate::bridge::{mouse_clicked, key_pressed};
+use crate::utils::{Coords, GameProperties, Arguments};
 
 /* MAIN */
 
@@ -19,8 +19,9 @@ fn main() {
 
     /* VARIABLES */
 
-    // define game properties (cell length, border width, cell amount x, cell amount y)
-    let props: GameProperties = GameProperties::new(100, 10, 3, 3);
+    // get args and define game properties
+    let args = Arguments::from_args();
+    let props: GameProperties = GameProperties::new(args, 100, 10, 3, 3);
 
     // declare cursor var
     let mut cursor = Coords(-1.0, -1.0);

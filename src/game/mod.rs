@@ -2,12 +2,11 @@ mod player;
 mod minimax;
 mod helpers;
 
-use minimax::call_minimax;
-
 use crate::bridge::update_front; 
 use crate::gui::front::Front;
 use crate::utils::{CellPos, CellState, GameProperties, PlayerType};
 use crate::game::player::Player;
+use crate::game::minimax::call_minimax;
 
 
 /* THE GAME BACKEND */
@@ -19,20 +18,20 @@ pub struct Game {
     human: Player,
     ai: Player,
 
-    beginner: bool,
+    starter: bool,
     turn: bool,
 }
 
 impl Game {
     pub fn new(props: GameProperties) -> Game {
-        let beginner = false;
+        let starter = props.args.starter;
         Game {
             field: vec![vec![CellState::Empty; props.camount_x as usize]; props.camount_y as usize],
             props,
             human: Player::new(PlayerType::Human),
             ai: Player::new(PlayerType::AI),
-            beginner,
-            turn: beginner,
+            starter,
+            turn: starter,
         }
     }
 
@@ -65,7 +64,7 @@ impl Game {
     // restart whole game
     pub fn restart(&mut self, front: &mut Front) {
         self.field = vec![vec![CellState::Empty; self.props.camount_x as usize]; self.props.camount_y as usize];
-        self.turn = self.beginner;
+        self.turn = self.starter;
         self.init(front);
         update_front(&self.field, front);
     }

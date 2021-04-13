@@ -52,8 +52,7 @@ fn main() {
 
         // key presses
         if let Some(Button::Keyboard(key)) = e.press_args() {
-            key_pressed(key, &mut game, &mut gui);
+            key_pressed(key, &mut game, &mut gui.front);
         }
-
     }
 }

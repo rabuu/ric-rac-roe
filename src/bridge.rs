@@ -11,7 +11,7 @@ use crate::utils::{GameProperties, CellPos, CellState, Coords};
 // send mouse clicks from main to backend
 pub fn mouse_clicked(btn: MouseButton, cursor: Coords, game: &mut Game, front: &mut Front, props: GameProperties) {
     if btn == MouseButton::Left {
-        game.trigger(get_cellpos_from_coords(cursor, props), front);
+        game.trigger(Some(get_cellpos_from_coords(cursor, props)), front);
     }
 }
 

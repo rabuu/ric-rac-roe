@@ -29,6 +29,8 @@ fn main() {
     let mut gui: Gui = Gui::new(props);
     let mut game: Game = Game::new(props);
 
+    game.init(&mut gui.front);
+
 
     /* EVENTS */
     // catch events and pass them through

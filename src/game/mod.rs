@@ -25,7 +25,7 @@ pub struct Game {
 
 impl Game {
     pub fn new(props: GameProperties) -> Game {
-        let beginner = true;
+        let beginner = false;
         Game {
             field: vec![vec![CellState::Empty; props.camount_x as usize]; props.camount_y as usize],
             props,
@@ -35,9 +35,13 @@ impl Game {
             turn: beginner,
         }
     }
+
+    pub fn init(&mut self, front: &mut Front) {
+        self.trigger(None, front);
+    }
     
     // the actual game flow triggered by a cell press
-    pub fn trigger(&mut self, pos: CellPos, front: &mut Front) {
+    pub fn trigger(&mut self, pos: Option<CellPos>, front: &mut Front) {
         
         // filter only 3x3 games
         if self.field.len() != 3 || self.field.iter().any(|row| row.len() != 3) {
@@ -46,8 +50,8 @@ impl Game {
 
         update_front(&self.field, front);
 
-        if self.turn {
-            let valid = self.human.make_move(pos, &mut self.field);
+        if self.turn && pos != None {
+            let valid = self.human.make_move(pos.unwrap(), &mut self.field);
             update_front(&self.field, front);
             if valid { self.turn = false }
         }
@@ -56,32 +60,13 @@ impl Game {
             update_front(&self.field, front);
             if valid { self.turn = true; }
         }
-
-        // if empty_cells(&self.field).iter().any(|&cell| cell == pos) && winner(&self.field) == None {
-
-        //     // human turn
-        //     self.human.make_move(pos, &mut self.field);
-        //     front.update_cell(pos, self.human.symbol);
-
-        //     if empty_cells(&self.field).len() > 0 && winner(&self.field) == None {
-                    
-        //         // ai turn
-        //         self.ai.make_move(call_minimax(&self.field, self.ai.ptype), &mut self.field);
-        //         update_front(&self.field, front);
-
-        //         if winner(&self.field) != None {
-        //             announce_winner(&self.field);
-        //         }
-        //     } else {
-        //         announce_winner(&self.field);
-        //     }
-        // } 
     }
 
     // restart whole game
     pub fn restart(&mut self, front: &mut Front) {
         self.field = vec![vec![CellState::Empty; self.props.camount_x as usize]; self.props.camount_y as usize];
         self.turn = self.beginner;
+        self.init(front);
         update_front(&self.field, front);
     }
 }

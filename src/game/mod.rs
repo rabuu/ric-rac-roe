@@ -36,6 +36,7 @@ impl Game {
     }
 
     pub fn init(&mut self, front: &mut Front) {
+        update_front(&self.field, front);
         self.trigger(None, front);
     }
     

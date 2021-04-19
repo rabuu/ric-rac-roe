@@ -24,7 +24,10 @@ pub fn call_minimax(field: &Vec<Vec<CellState>>, player: PlayerType) -> CellPos 
     
     let pval = if player == PlayerType::AI {1} else if player == PlayerType::Human {-1} else { panic!(); };
     let depth: usize = empty_cells(field).len();
-    let mm = minimax(&mut mm_field, depth, &pval);
+    let mm: [f32; 3] = match depth {
+        9 => [0_f32, 0_f32, 0_f32],
+        _ => minimax(&mut mm_field, depth, &pval)
+    };
     CellPos(mm[0] as u32, mm[1] as u32)
 }
 

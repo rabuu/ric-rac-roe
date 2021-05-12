@@ -13,12 +13,9 @@ impl Player {
     pub fn new(ptype: PlayerType) -> Player {
         Player {
             ptype,
-            symbol: if ptype == PlayerType::Human {
-                CellState::Circle
-            } else if ptype == PlayerType::AI {
-                CellState::Cross
-            } else {
-                panic!("Must be human or AI");
+            symbol: match ptype {
+                PlayerType::Human => CellState::Circle,
+                PlayerType::AI => CellState::Cross,
             },
         }
     }

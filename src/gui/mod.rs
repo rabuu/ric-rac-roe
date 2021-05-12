@@ -31,7 +31,7 @@ impl Gui {
             .resizable(false)
             .graphics_api(opengl)
             .build()
-            .unwrap_or_else(|e| { panic!("Failed to build window: {}", e) });
+            .expect("Failed to build window");
 
         let front: Front = Front::new(props, GlGraphics::new(opengl));
         

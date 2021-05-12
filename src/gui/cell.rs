@@ -28,7 +28,7 @@ impl Cell {
     // set texture to cross/circle/empty
     pub fn set_textr(&mut self, state: CellState) {
         let res = find_folder::Search::ParentsThenKids(3, 3)
-            .for_folder("res").unwrap_or_else(|e| { panic!("Failed finding res folder: {}", e) });
+            .for_folder("res").expect("Failed finding folder");
 
         self.textr = match state {
             CellState::Empty => Texture::empty(&TextureSettings::new()).unwrap(),
